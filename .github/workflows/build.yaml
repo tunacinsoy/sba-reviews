@@ -23,4 +23,4 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/mdo-posts:${{ env.VERSION }}-${{ env.TIMESTAMP }}-${{ env.COMMIT_HASH }}
       - name: Push the Docker image
-        run: docker push ${{ secrets.DOCKER_USER }}/mdo-posts:${{ env.VERSION }}-${{ env.TIMESTAMP }}-${{ env.COMMIT_HASH }}
+        run: docker push ${{ secrets.DOCKER_USER }}/sba-reviews:${{ env.VERSION }}-${{ env.TIMESTAMP }}-${{ env.COMMIT_HASH }}

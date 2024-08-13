@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      # Install necessary python dependencies, no need to install unittest since it comes with standard library
+      # Install necessary python dependencies, no need to explicitly specify unittest in requirements.txt file since it comes with standard library
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
@@ -39,10 +39,6 @@ jobs:
       - name: Install Grype
         id: install-grype
         run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
-
-      # Login to dockerhub
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       # Build the image
       - name: Build the Docker image
@@ -58,6 +54,10 @@ jobs:
         run: |
           docker run --rm ${{ secrets.DOCKER_USER }}/sba-reviews:${{ env.IMAGE_SUFFIX }} \
           python -m unittest test.py
+
+      # Login to dockerhub
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       # Push the image
       - name: Push the Docker image
